@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generador de Currículum</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Generador de Currículum</h1>
+  <form id="formulario">
+    <h2>Datos Personales</h2>
+    <input type="text" id="nombre" placeholder="Nombre completo" required>
+    <input type="email" id="email" placeholder="Correo electrónico" required>
+    <input type="text" id="telefono" placeholder="Teléfono" required>
+    <input type="text" id="direccion" placeholder="Dirección" required>
+    <input type="text" id="fecha_nacimiento" placeholder="Fecha de nacimiento" required>
+    <input type="text" id="nacionalidad" placeholder="Nacionalidad" required>
+    <input type="text" id="rut" placeholder="RUT" required>
+    <input type="text" id="estado_civil" placeholder="Estado Civil" required>
+    <input type="text" id="sistema_salud" placeholder="Sistema de Salud" required>
+    <input type="text" id="afp" placeholder="AFP" required>
+    <input type="text" id="licencia_conducir" placeholder="Licencia de Conducir" required>
+
+    <h2>Datos Académicos</h2>
+    <div id="contenedor-academico"></div>
+    <button type="button" id="agregar-academico">Agregar Formación Académica</button>
+
+    <h2>Datos Laborales</h2>
+    <div id="contenedor-laboral"></div>
+    <button type="button" id="agregar-laboral">Agregar Experiencia Laboral</button>
+
+    <br><br>
+    <button type="submit">Generar PDF</button>
+  </form>
+
+  <script src="script.js"></script>
+</body>
+</html>
