@@ -1,53 +1,67 @@
 from fpdf import FPDF
+from PyPDF2 import PdfReader, PdfWriter
+import os
 
-class PDF(FPDF):
-    def header(self):
-        self.set_font("Arial", "I", 28)
-        self.cell(0, 10, "Currículum Vitae", ln=True, align="R")
-        self.ln(3)
-        self.set_draw_color(200, 200, 200)
-        self.set_line_width(0.3)
-        self.line(10, self.get_y(), 200, self.get_y())
-        self.ln(8)
+def generar_pdf(datos):
+    if not datos or "personales" not in datos or "academicos" not in datos or "laborales" not in datos:
+        raise ValueError("Datos inválidos recibidos para generar PDF")
 
-    def campo(self, label, valor):
-        self.set_font("Arial", "B", 11)
-        self.cell(40, 8, f"{label}:", ln=0)
-        self.set_font("Arial", "", 11)
-        self.multi_cell(0, 8, valor, ln=1)
-        self.ln(1)
-
-def crear_pdf(datos, ruta_salida):
-    pdf = PDF()
-    pdf.add_page()
+    pdf = FPDF()
     pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.add_page()
+
+    pdf.set_font("Arial", "I", 28)
+    pdf.cell(0, 15, "CURRÍCULUM VITAE", ln=True, align="R")
+    y = pdf.get_y() + 2
+    pdf.set_draw_color(0, 0, 0)
+    pdf.set_line_width(0.5)
+    pdf.line(10, y, 200, y)
+    pdf.ln(10)
 
     pdf.set_font("Arial", "B", 14)
-    pdf.cell(0, 10, "Datos Personales", ln=True)
-    pdf.ln(2)
-    for campo in ["nombre", "direccion", "telefono", "correo"]:
-        valor = datos.get(campo, "")
-        if valor:
-            pdf.campo(campo.capitalize(), valor)
-
+    pdf.cell(0, 10, "DATOS PERSONALES", ln=True)
+    pdf.set_font("Arial", "", 12)
+    for clave, valor in datos["personales"].items():
+        pdf.cell(60, 8, f"{clave.upper()}:", ln=False)
+        pdf.cell(120, 8, valor, ln=True)
     pdf.ln(5)
-    pdf.set_font("Arial", "B", 14)
-    pdf.cell(0, 10, "Formación Académica", ln=True)
-    pdf.ln(2)
-    for aca in datos.get("academicos", []):
-        linea = f"{aca.get('estudio', '')} - {aca.get('institucion', '')} ({aca.get('fecha', '')})"
-        pdf.set_font("Arial", "", 11)
-        pdf.multi_cell(0, 8, linea)
-        pdf.ln(1)
 
-    pdf.ln(3)
     pdf.set_font("Arial", "B", 14)
-    pdf.cell(0, 10, "Experiencia Laboral", ln=True)
-    pdf.ln(2)
-    for lab in datos.get("laborales", []):
-        linea = f"{lab.get('puesto', '')} - {lab.get('empresa', '')} ({lab.get('fecha', '')})"
-        pdf.set_font("Arial", "", 11)
-        pdf.multi_cell(0, 8, linea)
-        pdf.ln(1)
+    pdf.cell(0, 10, "DATOS ACADÉMICOS", ln=True)
+    pdf.set_font("Arial", "", 12)
+    for dato in datos["academicos"]:
+        pdf.cell(60, 8, "Fecha:", ln=False)
+        pdf.cell(120, 8, dato.get("fecha", ""), ln=True)
+        pdf.cell(60, 8, "Establecimiento:", ln=False)
+        pdf.cell(120, 8, dato.get("establecimiento", ""), ln=True)
+        pdf.cell(60, 8, "Grado:", ln=False)
+        pdf.cell(120, 8, dato.get("grado", ""), ln=True)
+        pdf.ln(5)
 
-    pdf.output(ruta_salida)
+    pdf.set_font("Arial", "B", 14)
+    pdf.cell(0, 10, "DATOS LABORALES", ln=True)
+    pdf.set_font("Arial", "", 12)
+    for dato in datos["laborales"]:
+        pdf.cell(60, 8, "Fecha:", ln=False)
+        pdf.cell(120, 8, dato.get("fecha", ""), ln=True)
+        pdf.cell(60, 8, "Empresa:", ln=False)
+        pdf.cell(120, 8, dato.get("empresa", ""), ln=True)
+        pdf.cell(60, 8, "Cargo:", ln=False)
+        pdf.cell(120, 8, dato.get("cargo", ""), ln=True)
+        pdf.ln(5)
+
+    temp_output = "curriculum.pdf"
+    pdf.output(temp_output)
+
+    reader = PdfReader(temp_output)
+    writer = PdfWriter()
+    for page in reader.pages:
+        writer.add_page(page)
+    writer.encrypt("1234")
+
+    final_output = "curriculum_protegido.pdf"
+    with open(final_output, "wb") as f:
+        writer.write(f)
+
+    os.remove(temp_output)
+    return final_output
