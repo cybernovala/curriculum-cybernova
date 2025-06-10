@@ -9,9 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const div = document.createElement("div");
     div.classList.add("academico");
     div.innerHTML = `
-        <input type="text" class="fecha-academico" placeholder="Fecha" required><br>
-        <input type="text" class="establecimiento-academico" placeholder="Establecimiento" required><br>
-        <input type="text" class="grado-academico" placeholder="Grado" required><br><br>
+      <input type="text" class="fecha-academico" placeholder="Fecha" required><br>
+      <input type="text" class="establecimiento-academico" placeholder="Establecimiento" required><br>
+      <input type="text" class="grado-academico" placeholder="Grado" required><br><br>
     `;
     contenedor.appendChild(div);
   });
@@ -21,9 +21,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const div = document.createElement("div");
     div.classList.add("laboral");
     div.innerHTML = `
-        <input type="text" class="fecha-laboral" placeholder="Fecha" required><br>
-        <input type="text" class="empresa-laboral" placeholder="Empresa" required><br>
-        <input type="text" class="cargo-laboral" placeholder="Cargo" required><br><br>
+      <input type="text" class="fecha-laboral" placeholder="Fecha" required><br>
+      <input type="text" class="empresa-laboral" placeholder="Empresa" required><br>
+      <input type="text" class="cargo-laboral" placeholder="Cargo" required><br><br>
     `;
     contenedor.appendChild(div);
   });
@@ -63,9 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
       body: JSON.stringify({ personales, academicos, laborales })
     })
     .then(response => {
-      if (!response.ok) {
-        throw new Error("Error al generar el PDF");
-      }
+      if (!response.ok) throw new Error("Error del servidor");
       return response.blob();
     })
     .then(blob => {
@@ -76,9 +74,6 @@ document.addEventListener("DOMContentLoaded", function () {
       enlace.click();
       document.body.removeChild(enlace);
     })
-    .catch(error => {
-      console.error("Error generando el PDF:", error);
-      alert("Hubo un error generando el PDF.");
-    });
+    .catch(error => alert("❌ Hubo un error generando el PDF: " + error));
   });
 });
