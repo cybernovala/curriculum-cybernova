@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test CORS</title>
+</head>
+<body>
+  <h1>Probar solicitud al backend</h1>
+  <button onclick="probar()">Probar conexión</button>
+
+  <script>
+    function probar() {
+      fetch('https://cybernovala.pythonanywhere.com/generar_pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          personales: {
+            "Nombre completo": "JUAN TEST",
+            "Correo electrónico": "JUAN@MAIL.COM",
+            "Teléfono": "123456789",
+            "Dirección": "DIRECCIÓN",
+            "Fecha de nacimiento": "01-01-1990",
+            "Nacionalidad": "CHILENA",
+            "RUT": "12.345.678-9",
+            "Estado Civil": "SOLTERO",
+            "Sistema de Salud": "FONASA",
+            "AFP": "MODELO",
+            "Licencia de Conducir": "B"
+          },
+          academicos: [],
+          laborales: []
+        })
+      })
+      .then(response => {
+        if (!response.ok) throw new Error("Error de red");
+        return response.blob();
+      })
+      .then(blob => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "curriculum_test.pdf";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      })
+      .catch(error => alert("Error: " + error));
+    }
+  </script>
+</body>
+</html>
