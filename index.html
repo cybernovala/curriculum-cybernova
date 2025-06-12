@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Currículum</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Currículum ----- Cybernova</h1>
+  <h1>Currículum -- Cybernova</h1>
   <form id="formulario">
     <h2>Datos Personales</h2>
     <input name="nombre" id="nombre" type="text" placeholder="Nombre completo" required><br>
@@ -31,8 +31,12 @@
     <button type="button" id="agregar-laboral">Agregar Experiencia Laboral</button>
 
     <br><br>
-    <button type="submit">Generar PDF</button>
+    <button type="button" id="mostrar-previa">Mostrar Vista Previa</button>
+    <button type="submit" id="generar" disabled>Generar PDF</button>
   </form>
+
+  <h2>Vista Previa</h2>
+  <div id="vista-previa" style="display: none;"></div>
 
   <script src="script.js"></script>
 </body>
