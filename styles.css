@@ -14,7 +14,7 @@ form {
   margin: auto;
 }
 
-input, button, .preview-box {
+input, button {
   width: 100%;
   margin: 8px 0;
   padding: 10px;
@@ -34,10 +34,12 @@ button:hover {
   background-color: #0056b3;
 }
 
-.preview-box {
+#vista-previa-container {
+  background: #ffffff;
+  padding: 20px;
+  margin: 20px auto;
   border: 1px solid #ccc;
-  min-height: 200px;
+  border-radius: 10px;
+  max-width: 600px;
   white-space: pre-wrap;
-  background-color: #fdfdfd;
-  border-radius: 5px;
 }
