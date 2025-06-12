@@ -7,11 +7,6 @@ const vistaContainer = document.getElementById("vista-previa-container");
 const vistaContenido = document.getElementById("vista-previa-contenido");
 const mensajeDescarga = document.getElementById("mensaje-descarga");
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  await generarPDF();
-});
-
 generarBtn.addEventListener("click", async () => {
   await generarPDF();
 });
