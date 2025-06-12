@@ -2,44 +2,65 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Currículum - Cybernova</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generador de Currículum</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>Crear Curriculum de Cybernova</h1>
+  <h1>Formulario de Currículum</h1>
 
   <form id="formulario">
-    <h2>Datos Personales</h2>
-    <input name="nombre" type="text" placeholder="Nombre completo" required><br>
-    <input name="email" type="email" placeholder="Correo electrónico" required><br>
-    <input name="telefono" type="text" placeholder="Teléfono" required><br>
-    <input name="direccion" type="text" placeholder="Dirección" required><br>
-    <input name="fecha_nacimiento" type="text" placeholder="Fecha de nacimiento" required><br>
-    <input name="nacionalidad" type="text" placeholder="Nacionalidad" required><br>
-    <input name="rut" type="text" placeholder="RUT" required><br>
-    <input name="estado_civil" type="text" placeholder="Estado Civil" required><br>
-    <input name="sistema_salud" type="text" placeholder="Sistema de Salud" required><br>
-    <input name="afp" type="text" placeholder="AFP" required><br>
-    <input name="licencia_conducir" type="text" placeholder="Licencia de Conducir" required><br>
+    <fieldset>
+      <legend>Datos Personales</legend>
+      <input type="text" name="nombre" placeholder="Nombre completo" required />
+      <input type="text" name="email" placeholder="Correo electrónico" required />
+      <input type="text" name="telefono" placeholder="Teléfono" required />
+      <input type="text" name="direccion" placeholder="Dirección" required />
+      <input type="text" name="fecha_nacimiento" placeholder="Fecha de nacimiento (dd/mm/aaaa)" required />
+      <input type="text" name="nacionalidad" placeholder="Nacionalidad" />
+      <input type="text" name="rut" placeholder="RUT" />
+      <input type="text" name="estado_civil" placeholder="Estado civil" />
+      <input type="text" name="sistema_salud" placeholder="Sistema de salud" />
+      <input type="text" name="afp" placeholder="AFP" />
+      <input type="text" name="licencia_conducir" placeholder="Licencia de conducir" />
+    </fieldset>
 
-    <h2>Datos Académicos</h2>
-    <div id="contenedor-academico"></div>
-    <button type="button" id="agregar-academico">Agregar Formación Académica</button>
+    <fieldset id="academico">
+      <legend>Formación Académica</legend>
+      <div class="grupo">
+        <input type="text" name="fecha" placeholder="Fecha" required />
+        <input type="text" name="establecimiento" placeholder="Establecimiento" required />
+        <input type="text" name="grado" placeholder="Grado / Título" required />
+      </div>
+      <button type="button" onclick="agregarCampo('academico')">Agregar Formación</button>
+    </fieldset>
 
-    <h2>Datos Laborales</h2>
-    <div id="contenedor-laboral"></div>
-    <button type="button" id="agregar-laboral">Agregar Experiencia Laboral</button>
+    <fieldset id="laboral">
+      <legend>Experiencia Laboral</legend>
+      <div class="grupo">
+        <input type="text" name="fecha" placeholder="Fecha" required />
+        <input type="text" name="empresa" placeholder="Empresa" required />
+        <input type="text" name="cargo" placeholder="Cargo" required />
+      </div>
+      <button type="button" onclick="agregarCampo('laboral')">Agregar Experiencia</button>
+    </fieldset>
 
-    <p style="color:red; font-size: 0.9em;">
-      Si el currículum se abre y pide contraseña, solo cancele y búsquelo en la carpeta de descargas de su móvil. Luego puede compartirlo por correo o WhatsApp al Cyber para su impresión.
-    </p>
+    <button type="button" id="vista-previa">Vista Previa</button>
 
-    <br><br>
-    <button type="button" id="vista-previa-btn">Vista Previa</button>
-    <button type="button" id="modificar-btn" style="display:none;">Modificar</button>
-    <button type="submit" id="generar-pdf-btn" style="display:none;">Generar PDF</button>
+    <div id="botones-acciones" style="display: none;">
+      <button type="button" id="modificar">Modificar</button>
+      <button type="submit" id="btn-generar">Generar PDF</button>
+    </div>
   </form>
+
+  <div id="vista-previa-container" style="display:none;">
+    <h2>Vista Previa</h2>
+    <div id="vista-previa-contenido"></div>
+  </div>
+
+  <div id="mensaje-descarga" style="display:none;" class="mensaje">
+    ✅ Su archivo se ha descargado en la carpeta "Descargas" de su dispositivo.
+  </div>
 
   <script src="script.js"></script>
 </body>
