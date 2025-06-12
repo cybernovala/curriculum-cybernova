@@ -57,8 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
       a.remove();
       URL.revokeObjectURL(url);
     } catch (error) {
-      alert("Hubo un error al generar el PDF. Revisa la consola.");
       console.error("Error al generar el PDF:", error);
+      alert("Hubo un error al generar el PDF.");
     }
   });
 
