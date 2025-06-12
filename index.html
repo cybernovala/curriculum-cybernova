@@ -1,49 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Generador de Currículum</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Currículum</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>Crear Currículum Vitae</h1>
-
+  <h1>Currículum -- Cybernova</h1>
   <form id="formulario">
-    <fieldset>
-      <legend>Datos Personales</legend>
-      <input type="text" id="nombre" placeholder="Nombre Completo" required>
-      <input type="email" id="email" placeholder="Correo Electrónico" required>
-      <input type="tel" id="telefono" placeholder="Teléfono" required>
-      <input type="text" id="direccion" placeholder="Dirección" required>
-      <input type="date" id="fecha_nacimiento" placeholder="Fecha de Nacimiento">
-      <input type="text" id="nacionalidad" placeholder="Nacionalidad">
-      <input type="text" id="rut" placeholder="RUT">
-      <input type="text" id="estado_civil" placeholder="Estado Civil">
-      <input type="text" id="sistema_salud" placeholder="Sistema de Salud (Fonasa/Isapre)">
-      <input type="text" id="afp" placeholder="AFP">
-      <input type="text" id="licencia_conducir" placeholder="Licencia de Conducir">
-    </fieldset>
+    <h2>Datos Personales</h2>
+    <input name="nombre" type="text" id="nombre" placeholder="Nombre completo" required><br>
+    <input name="email" type="text" id="email" placeholder="Correo electrónico" required><br>
+    <input name="telefono" type="text" id="telefono" placeholder="Teléfono" required><br>
+    <input name="direccion" type="text" id="direccion" placeholder="Dirección" required><br>
+    <input name="fecha_nacimiento" type="text" id="fecha_nacimiento" placeholder="Fecha de nacimiento" required><br>
+    <input name="nacionalidad" type="text" id="nacionalidad" placeholder="Nacionalidad" required><br>
+    <input name="rut" type="text" id="rut" placeholder="RUT" required><br>
+    <input name="estado_civil" type="text" id="estado_civil" placeholder="Estado Civil" required><br>
+    <input name="sistema_salud" type="text" id="sistema_salud" placeholder="Sistema de Salud" required><br>
+    <input name="afp" type="text" id="afp" placeholder="AFP" required><br>
+    <input name="licencia_conducir" type="text" id="licencia_conducir" placeholder="Licencia de Conducir" required><br>
 
-    <fieldset>
-      <legend>Formación Académica</legend>
-      <div id="contenedor-academico"></div>
-      <button type="button" id="agregar-academico">Agregar Formación</button>
-    </fieldset>
+    <h2>Datos Académicos</h2>
+    <div id="contenedor-academico"></div>
+    <button type="button" id="agregar-academico">Agregar Formación Académica</button>
 
-    <fieldset>
-      <legend>Experiencia Laboral</legend>
-      <div id="contenedor-laboral"></div>
-      <button type="button" id="agregar-laboral">Agregar Experiencia</button>
-    </fieldset>
+    <h2>Datos Laborales</h2>
+    <div id="contenedor-laboral"></div>
+    <button type="button" id="agregar-laboral">Agregar Experiencia Laboral</button>
 
+    <h2>Vista Previa</h2>
+    <div id="vista-previa" contenteditable="true" class="preview-box"></div>
+
+    <br><br>
     <button type="submit">Generar PDF</button>
   </form>
 
-  <!-- Mensaje de éxito -->
-  <div id="mensaje-exito" class="oculto"></div>
-
-  <!-- Script -->
   <script src="script.js"></script>
 </body>
 </html>
