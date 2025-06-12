@@ -2,26 +2,26 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Currículum -- Cybernova</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Currículum - Cybernova</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>Currículum ---- Cybernova</h1>
+  <h1>Crear Curriculum de Cybernova</h1>
 
   <form id="formulario">
     <h2>Datos Personales</h2>
-    <input name="nombre" type="text" id="nombre" placeholder="Nombre completo" required><br>
-    <input name="email" type="email" id="email" placeholder="Correo electrónico" required><br>
-    <input name="telefono" type="text" id="telefono" placeholder="Teléfono" required><br>
-    <input name="direccion" type="text" id="direccion" placeholder="Dirección" required><br>
-    <input name="fecha_nacimiento" type="text" id="fecha_nacimiento" placeholder="Fecha de nacimiento" required><br>
-    <input name="nacionalidad" type="text" id="nacionalidad" placeholder="Nacionalidad" required><br>
-    <input name="rut" type="text" id="rut" placeholder="RUT" required><br>
-    <input name="estado_civil" type="text" id="estado_civil" placeholder="Estado Civil" required><br>
-    <input name="sistema_salud" type="text" id="sistema_salud" placeholder="Sistema de Salud" required><br>
-    <input name="afp" type="text" id="afp" placeholder="AFP" required><br>
-    <input name="licencia_conducir" type="text" id="licencia_conducir" placeholder="Licencia de Conducir" required><br>
+    <input name="nombre" type="text" placeholder="Nombre completo" required><br>
+    <input name="email" type="email" placeholder="Correo electrónico" required><br>
+    <input name="telefono" type="text" placeholder="Teléfono" required><br>
+    <input name="direccion" type="text" placeholder="Dirección" required><br>
+    <input name="fecha_nacimiento" type="text" placeholder="Fecha de nacimiento" required><br>
+    <input name="nacionalidad" type="text" placeholder="Nacionalidad" required><br>
+    <input name="rut" type="text" placeholder="RUT" required><br>
+    <input name="estado_civil" type="text" placeholder="Estado Civil" required><br>
+    <input name="sistema_salud" type="text" placeholder="Sistema de Salud" required><br>
+    <input name="afp" type="text" placeholder="AFP" required><br>
+    <input name="licencia_conducir" type="text" placeholder="Licencia de Conducir" required><br>
 
     <h2>Datos Académicos</h2>
     <div id="contenedor-academico"></div>
@@ -31,21 +31,15 @@
     <div id="contenedor-laboral"></div>
     <button type="button" id="agregar-laboral">Agregar Experiencia Laboral</button>
 
-    <br><br>
-
-    <!-- Mensaje preventivo en rojo -->
-    <p style="color: red; font-size: 0.9rem; margin-bottom: 10px;">
+    <p style="color:red; font-size: 0.9em;">
       Si el currículum se abre y pide contraseña, solo cancele y búsquelo en la carpeta de descargas de su móvil. Luego puede compartirlo por correo o WhatsApp al Cyber para su impresión.
     </p>
 
-    <button type="button" id="btnVistaPrevia">Vista Previa</button>
-    <button type="button" id="btnModificar" style="display: none;">Modificar</button>
-    <button type="submit" id="btnGenerarPDF" style="display: none;">Generar PDF</button>
+    <br><br>
+    <button type="button" id="vista-previa-btn">Vista Previa</button>
+    <button type="button" id="modificar-btn" style="display:none;">Modificar</button>
+    <button type="submit" id="generar-pdf-btn" style="display:none;">Generar PDF</button>
   </form>
-
-  <div id="mensaje-exito" style="display:none; color:green; margin-top:15px;">
-    ✅ ¡El currículum se ha descargado! Revise su carpeta de descargas para compartirlo desde su móvil.
-  </div>
 
   <script src="script.js"></script>
 </body>
