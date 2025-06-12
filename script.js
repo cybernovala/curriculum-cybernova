@@ -1,41 +1,43 @@
 document.addEventListener("DOMContentLoaded", () => {
   const formulario = document.getElementById("formulario");
+  const vista = document.getElementById("vista-previa");
+  const btnGenerar = document.getElementById("generar");
+
+  btnGenerar.disabled = true;
 
   formulario.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const data = {
       personales: {
-        nombre: document.getElementById("nombre")?.value || "",
-        email: document.getElementById("email")?.value || "",
-        telefono: document.getElementById("telefono")?.value || "",
-        direccion: document.getElementById("direccion")?.value || "",
-        fecha_nacimiento: document.getElementById("fecha_nacimiento")?.value || "",
-        nacionalidad: document.getElementById("nacionalidad")?.value || "",
-        rut: document.getElementById("rut")?.value || "",
-        estado_civil: document.getElementById("estado_civil")?.value || "",
-        sistema_salud: document.getElementById("sistema_salud")?.value || "",
-        afp: document.getElementById("afp")?.value || "",
-        licencia_conducir: document.getElementById("licencia_conducir")?.value || ""
+        nombre: document.getElementById("nombre").value,
+        email: document.getElementById("email").value,
+        telefono: document.getElementById("telefono").value,
+        direccion: document.getElementById("direccion").value,
+        fecha_nacimiento: document.getElementById("fecha_nacimiento").value,
+        nacionalidad: document.getElementById("nacionalidad").value,
+        rut: document.getElementById("rut").value,
+        estado_civil: document.getElementById("estado_civil").value,
+        sistema_salud: document.getElementById("sistema_salud").value,
+        afp: document.getElementById("afp").value,
+        licencia_conducir: document.getElementById("licencia_conducir").value
       },
       academicos: [],
       laborales: []
     };
 
-    document.querySelectorAll(".academico").forEach((div) => {
-      data.academicos.push({
-        fecha: div.querySelector(".fecha")?.value || "",
-        establecimiento: div.querySelector(".establecimiento")?.value || "",
-        grado: div.querySelector(".grado")?.value || ""
-      });
+    document.querySelectorAll(".academico").forEach(div => {
+      const fecha = div.querySelector(".fecha").value;
+      const establecimiento = div.querySelector(".establecimiento").value;
+      const grado = div.querySelector(".grado").value;
+      data.academicos.push({ fecha, establecimiento, grado });
     });
 
-    document.querySelectorAll(".laboral").forEach((div) => {
-      data.laborales.push({
-        fecha: div.querySelector(".fecha")?.value || "",
-        empresa: div.querySelector(".empresa")?.value || "",
-        cargo: div.querySelector(".cargo")?.value || ""
-      });
+    document.querySelectorAll(".laboral").forEach(div => {
+      const fecha = div.querySelector(".fecha").value;
+      const empresa = div.querySelector(".empresa").value;
+      const cargo = div.querySelector(".cargo").value;
+      data.laborales.push({ fecha, empresa, cargo });
     });
 
     try {
@@ -57,11 +59,42 @@ document.addEventListener("DOMContentLoaded", () => {
       a.remove();
       URL.revokeObjectURL(url);
     } catch (error) {
+      alert("Hubo un error al generar el PDF. Revisa la consola.");
       console.error("Error al generar el PDF:", error);
-      alert("Hubo un error al generar el PDF.");
     }
   });
 
+  document.getElementById("mostrar-previa").addEventListener("click", () => {
+    vista.innerHTML = "";
+    vista.style.display = "block";
+
+    vista.innerHTML += "<h3>Datos Personales</h3>";
+    ["nombre", "email", "telefono", "direccion", "fecha_nacimiento", "nacionalidad", "rut", "estado_civil", "sistema_salud", "afp", "licencia_conducir"]
+      .forEach(id => {
+        const el = document.getElementById(id);
+        vista.innerHTML += `<strong>${el.placeholder}:</strong> ${el.value}<br>`;
+      });
+
+    vista.innerHTML += "<br><h3>Datos Académicos</h3>";
+    document.querySelectorAll(".academico").forEach((div, i) => {
+      const fecha = div.querySelector(".fecha").value;
+      const est = div.querySelector(".establecimiento").value;
+      const grado = div.querySelector(".grado").value;
+      vista.innerHTML += `<p><strong>(${i + 1})</strong> ${fecha} - ${est} - ${grado}</p>`;
+    });
+
+    vista.innerHTML += "<br><h3>Datos Laborales</h3>";
+    document.querySelectorAll(".laboral").forEach((div, i) => {
+      const fecha = div.querySelector(".fecha").value;
+      const emp = div.querySelector(".empresa").value;
+      const cargo = div.querySelector(".cargo").value;
+      vista.innerHTML += `<p><strong>(${i + 1})</strong> ${fecha} - ${emp} - ${cargo}</p>`;
+    });
+
+    btnGenerar.disabled = false;
+  });
+
+  // Botones dinámicos
   document.getElementById("agregar-academico").addEventListener("click", () => {
     const div = document.createElement("div");
     div.className = "academico";
