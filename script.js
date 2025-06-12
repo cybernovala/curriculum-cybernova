@@ -1,64 +1,81 @@
 document.getElementById("formulario").addEventListener("submit", async function (e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    const formData = new FormData(this);
+  const data = {
+    personales: {
+      nombre: document.getElementById("nombre").value,
+      email: document.getElementById("email").value,
+      telefono: document.getElementById("telefono").value,
+      direccion: document.getElementById("direccion").value,
+      fecha_nacimiento: document.getElementById("fecha_nacimiento").value,
+      nacionalidad: document.getElementById("nacionalidad").value,
+      rut: document.getElementById("rut").value,
+      estado_civil: document.getElementById("estado_civil").value,
+      sistema_salud: document.getElementById("sistema_salud").value,
+      afp: document.getElementById("afp").value,
+      licencia_conducir: document.getElementById("licencia_conducir").value
+    },
+    academicos: [],
+    laborales: []
+  };
 
-    // Estructura final esperada
-    const data = {
-        personales: {},
-        academicos: [],
-        laborales: []
-    };
+  document.querySelectorAll(".academico").forEach((div) => {
+    const fecha = div.querySelector(".fecha").value;
+    const establecimiento = div.querySelector(".establecimiento").value;
+    const grado = div.querySelector(".grado").value;
+    data.academicos.push({ fecha, establecimiento, grado });
+  });
 
-    // Agrupar los campos personales
-    ["nombre", "correo", "telefono", "direccion"].forEach((campo) => {
-        data.personales[campo.charAt(0).toUpperCase() + campo.slice(1)] = formData.get(campo) || "";
+  document.querySelectorAll(".laboral").forEach((div) => {
+    const fecha = div.querySelector(".fecha").value;
+    const empresa = div.querySelector(".empresa").value;
+    const cargo = div.querySelector(".cargo").value;
+    data.laborales.push({ fecha, empresa, cargo });
+  });
+
+  try {
+    const response = await fetch("https://cybernovala.pythonanywhere.com/generar_pdf", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
     });
 
-    // Agrupar estudios académicos
-    for (let i = 1; i <= 3; i++) {
-        const acad = {
-            fecha: formData.get(`acad_fecha${i}`),
-            establecimiento: formData.get(`acad_establecimiento${i}`),
-            grado: formData.get(`acad_grado${i}`)
-        };
-        if (acad.fecha || acad.establecimiento || acad.grado) {
-            data.academicos.push(acad);
-        }
-    }
+    if (!response.ok) throw new Error("Error al generar el PDF");
 
-    // Agrupar experiencia laboral
-    for (let i = 1; i <= 3; i++) {
-        const lab = {
-            fecha: formData.get(`lab_fecha${i}`),
-            empresa: formData.get(`lab_empresa${i}`),
-            cargo: formData.get(`lab_cargo${i}`)
-        };
-        if (lab.fecha || lab.empresa || lab.cargo) {
-            data.laborales.push(lab);
-        }
-    }
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "curriculum.pdf";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    alert("Hubo un error al generar el PDF. Revisa la consola.");
+    console.error("Error al generar el PDF:", error);
+  }
+});
 
-    try {
-        const response = await fetch("https://cybernovala.pythonanywhere.com/generar_pdf", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
-        });
+// Funciones para agregar campos dinámicos
+document.getElementById("agregar-academico").addEventListener("click", () => {
+  const div = document.createElement("div");
+  div.className = "academico";
+  div.innerHTML = `
+    <input type="text" class="fecha" placeholder="Fecha" required>
+    <input type="text" class="establecimiento" placeholder="Establecimiento" required>
+    <input type="text" class="grado" placeholder="Grado" required><br><br>
+  `;
+  document.getElementById("contenedor-academico").appendChild(div);
+});
 
-        if (!response.ok) throw new Error("Error al generar el PDF");
-
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "curriculum.pdf";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-    } catch (error) {
-        console.error("Error al generar el PDF:", error);
-        alert("Hubo un error al generar el PDF. Revisa la consola.");
-    }
+document.getElementById("agregar-laboral").addEventListener("click", () => {
+  const div = document.createElement("div");
+  div.className = "laboral";
+  div.innerHTML = `
+    <input type="text" class="fecha" placeholder="Fecha" required>
+    <input type="text" class="empresa" placeholder="Empresa" required>
+    <input type="text" class="cargo" placeholder="Cargo" required><br><br>
+  `;
+  document.getElementById("contenedor-laboral").appendChild(div);
 });
